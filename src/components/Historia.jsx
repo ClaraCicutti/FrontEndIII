@@ -32,7 +32,11 @@ class Historia extends Component {
   };
 
   handleReset = () => {
-    this.componentWillMount();
+    this.setState({
+      eleccion: "",
+      historial: [],
+      contador: 1
+    })
   };
 
   render() {
