@@ -2,4 +2,4 @@
 FrontEndIII_1er_entregable
 
 # Link al código en CodeSandBox 👇🏻
-https://github.com/ClaraCicutti/FrontEndIII
+https://codesandbox.io/s/damp-rgb-scjqi?file=/src/App.js
