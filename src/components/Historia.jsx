@@ -3,86 +3,61 @@ import Opciones from "./Opciones.jsx";
 import Seleccion from "./Seleccion.jsx";
 import data from "./data.json";
 
-let indice;
 class Historia extends Component {
   state = {
-    historia: "",
-    opcionA: "",
-    opcionB: "",
-    historias: [],
-    seleccion: "",
-    historial: [],
-    id: ""
+    historias: data,
+    contador: 0,
+    eleccion: "",
+    historial: []
   };
 
-  componentDidMount() {
+  componentWillMount() {
     console.log("ComponentDidMount App.js");
-    indice = 1;
     this.setState({
-      historia: data[0].historia,
-      opcionA: data[0].opciones.a,
-      opcionB: data[0].opciones.b,
-      historias: data,
-      seleccion: "",
+      eleccion: "",
       historial: [],
-      id: data[0].id
+      contador: 1
     });
   }
 
-  handleClick = (valor, e) => {
-    indice++;
-    let historiaSiguiente = data.filter(
-      (data) => data.id === indice + valor
-    )[0];
-
-    indice - 1 < 5
-      ? valor === "a"
-        ? this.setState((prevState) => ({
-            seleccion: "A",
-            historial: [...prevState.historial, "A"],
-            historia: historiaSiguiente.historia,
-            opcionA: historiaSiguiente.opciones.a,
-            opcionB: historiaSiguiente.opciones.b,
-            id: historiaSiguiente.id
-          }))
-        : this.setState((prevState) => ({
-            seleccion: "B",
-            historial: [...prevState.historial, "B"],
-            historia: historiaSiguiente.historia,
-            opcionA: historiaSiguiente.opciones.a,
-            opcionB: historiaSiguiente.opciones.b,
-            id: historiaSiguiente.id
-          }))
-      : e.preventDefault(alert("Fin de la historia 🥳"));
+  handleClick = (valor) => {
+    this.state.contador < 5
+    ? this.setState((prevState) => ({
+        eleccion: valor,
+        contador: prevState.contador + 1,
+        historial: [...prevState.historial, valor.toUpperCase()],
+      }))
+    :
+      alert("Fin de la historia 🥳")
   };
 
   handleReset = () => {
-    this.componentDidMount();
+    this.componentWillMount();
   };
 
   render() {
-    const { historial, historia, seleccion, opcionA, opcionB} = this.state;
+
+    const { contador, eleccion, historias, historial } = this.state;
+
+    const id = contador + eleccion;
+    let index = historias.findIndex(historia => historia.id === id);
+
     return (
       <Fragment>
         <div className="layout">
-          <h1 className="historia">{historia}</h1>
+          <h1 className="historia">{data[index].historia}</h1>
 
           <Opciones
             onClick={this.handleClick}
-            opcionA={opcionA}
-            opcionB={opcionB}
+            opciones={historias[index].opciones}
           />
 
           <Seleccion
-            seleccion={seleccion}
+            eleccion={eleccion.toUpperCase()}
             historial={historial}
           />
         </div>
-        <button
-          type="reset"
-          onClick={this.handleReset}
-          className={"btnReset"}
-        >
+        <button onClick={this.handleReset} className={"btnReset"}>
           <p>👈🏻Reset</p>
         </button>
           

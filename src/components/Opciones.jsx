@@ -1,39 +1,45 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 
-export default class Opciones extends Component {
+class Opciones extends Component {
+
+  componentDidMount() {
+    console.log("ComponentDidMount Opciones.jsx");
+  }
+
   handleOnClick = (e) => {
-    e.preventDefault();
     const value = e.target.value;
-    this.props.onClick(value, e);
+    this.props.onClick(value);
   };
 
   render() {
-    const { opcionA, opcionB } = this.props;
+
+    const { opciones } = this.props;
+
     return (
-      <Fragment>
-        <div className="opciones">
-          <div className="opcion">
-            <button
-              className="botones"
-              onClick={this.handleOnClick}
-              value={"a"}
-            >
-              👉🏻A
-            </button>
-            <h2>{opcionA}</h2>
-          </div>
-          <div className="opcion">
-            <button
-              className="botones"
-              onClick={this.handleOnClick}
-              value={"b"}
-            >
-              👉🏻B
-            </button>
-            <h2>{opcionB}</h2>
-          </div>
+      <div className="opciones">
+        <div className="opcion">
+          <button
+            className="botones"
+            onClick={this.handleOnClick}
+            value={"a"}
+          >
+            👉🏻A
+          </button>
+          <h2>{opciones.a}</h2>
         </div>
-      </Fragment>
+        <div className="opcion">
+          <button
+            className="botones"
+            onClick={this.handleOnClick}
+            value={"b"}
+          >
+            👉🏻B
+          </button>
+          <h2>{opciones.b}</h2>
+        </div>
+      </div>
     );
   }
 }
+
+export default Opciones;
